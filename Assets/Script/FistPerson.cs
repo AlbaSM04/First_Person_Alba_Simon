@@ -44,8 +44,8 @@ public class FirstPerson : MonoBehaviour
         cam = Camera.main;
 
         // Inicializa la munición de ambas armas
-        datosArma.balasCargador = 10;
-        //misDatosM4.balasCargador = 60;
+        //datosArma.balasCargador = 10;
+        
 
         // Configura el cursor del ratón para que esté bloqueado y no sea visible
         Cursor.lockState = CursorLockMode.Locked;

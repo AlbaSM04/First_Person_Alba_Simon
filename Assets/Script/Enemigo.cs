@@ -30,6 +30,8 @@ public class Enemigo : MonoBehaviour
         anim = GetComponent<Animator>(); // Obtiene el componente Animator.
         huesos = GetComponentsInChildren<Rigidbody>(); // Obtiene todos los huesos del enemigo.
 
+        
+
         CambiarEstadoHuesos(true); // Desactiva la física de los huesos al inicio (enemigo rígido).
     }
 
@@ -41,15 +43,16 @@ public class Enemigo : MonoBehaviour
         // Si el enemigo ha llegado al jugador, detiene el movimiento y ataca.
         if (!agent.pathPending && agent.remainingDistance <= agent.stoppingDistance)
         {
+            
             agent.isStopped = true; // Detiene el movimiento del enemigo.
-            anim.SetBool("Atacking", true); // Activa la animación de ataque.
+            anim.SetBool("Atacando", true); // Activa la animación de ataque.
             EnfocarPlayer(); // Hace que el enemigo mire hacia el jugador.
         }
 
         // Si la ventana de ataque está abierta y no se ha infligido daño, intenta atacar.
         if (ventanaAbierta && danoHecho == false)
         {
-            DetectarJugador(); // Detecta si el jugador está en el radio de ataque.
+            HolaJugador(); // Detecta si el jugador está en el radio de ataque.
         }
     }
 
@@ -62,7 +65,7 @@ public class Enemigo : MonoBehaviour
     }
 
     // Detecta si el jugador está dentro del radio de ataque.
-    private void DetectarJugador()
+    private void HolaJugador()
     {
         Collider[] collsDetectados = Physics.OverlapSphere(puntoAtaque.position, radioAtaque, queEsDano); // Busca colisiones en el radio de ataque.
         if (collsDetectados.Length > 0) // Si hay colisiones detectadas...
@@ -75,15 +78,7 @@ public class Enemigo : MonoBehaviour
         }
     }
 
-    // Lógica para cuando el enemigo muere.
-    public void Morir()
-    {
-        agent.enabled = false; // Desactiva el NavMeshAgent para detener el movimiento.
-        anim.enabled = false; // Desactiva el Animator para evitar más animaciones.
-        CambiarEstadoHuesos(false); // Activa la física de los huesos para simular ragdoll.
-        Destroy(gameObject, 10); // Destruye al enemigo después de 10 segundos.
-    }
-
+    
     // Activa o desactiva la física de los huesos.
     private void CambiarEstadoHuesos(bool estado)
     {
@@ -112,4 +107,15 @@ public class Enemigo : MonoBehaviour
     {
         ventanaAbierta = false;
     }
+
+    // Lógica para cuando el enemigo muere.
+    public void Morir()
+    {
+        agent.enabled = false; // Desactiva el NavMeshAgent para detener el movimiento.
+        anim.enabled = false; // Desactiva el Animator para evitar más animaciones.
+        CambiarEstadoHuesos(false); // Activa la física de los huesos para simular ragdoll.
+        Destroy(gameObject, 10); // Destruye al enemigo después de 10 segundos.
+    }
+
+    
 }
