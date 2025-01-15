@@ -28,7 +28,7 @@ public class FirstPerson : MonoBehaviour
     private CharacterController controller;
 
     [Header ("Armas")] 
-    [SerializeField] MenuPrincipalArma datosArma; // ScriptableObject con datos del arma principal
+    //[SerializeField] MenuArma datosArma; // ScriptableObject con datos del arma principal
 
     [Header("Canvas")]
     [SerializeField] Canvas muerte;
