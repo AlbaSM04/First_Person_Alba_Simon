@@ -29,7 +29,12 @@ public class FirstPerson : MonoBehaviour
 
     [Header ("Armas")] 
     [SerializeField] MenuPrincipalArma datosArma; // ScriptableObject con datos del arma principal
-    [SerializeField] MenuPrincipalArma datosArmaDos; // ScriptableObject con datos del arma secundaria
+
+    [Header("Canvas")]
+    [SerializeField] Canvas muerte;
+    [SerializeField] Canvas ganador;
+    [SerializeField] Canvas hud;
+
 
 
 
@@ -43,9 +48,7 @@ public class FirstPerson : MonoBehaviour
         // Obtiene la cámara principal de la escena
         cam = Camera.main;
 
-        // Inicializa la munición de ambas armas
-        //datosArma.balasCargador = 10;
-        
+             
 
         // Configura el cursor del ratón para que esté bloqueado y no sea visible
         Cursor.lockState = CursorLockMode.Locked;
@@ -77,10 +80,7 @@ public class FirstPerson : MonoBehaviour
         AplicarGravedad();
         DeteccionSuelo();
 
-        // Actualiza los textos de la interfaz (si fuera necesario)
-        // textoBalas.SetText("Municion pistola: " + // datosArma.balasCargador);
-        // textoMunicionM4.SetText("Municion m4: " + // misDatosM4.balasCargador);
-        // textoVida.SetText("Vida: " + vidas);
+        
     }
 
     private void AplicarGravedad()
@@ -124,23 +124,6 @@ public class FirstPerson : MonoBehaviour
         }
     }
 
-    private void OnDrawGizmos()
-    {
-        // Dibuja una esfera en el Editor para visualizar el área de detección del suelo
-        Gizmos.DrawWireSphere(pies.position, radioDeteccion);
-    }
-
-    private void OnControllerColliderHit(ControllerColliderHit hit)
-    {
-        // Si el personaje colisiona con un objeto etiquetado como "ParteEnemigo"
-        if (hit.gameObject.CompareTag("Enemigo"))
-        {
-            // Obtiene el Rigidbody del enemigo y le aplica una fuerza de impulso
-            Rigidbody rbEnemigo = hit.gameObject.GetComponent<Rigidbody>();
-            Vector3 direccionFuerza = hit.transform.position - transform.position;
-            rbEnemigo.AddForce(direccionFuerza.normalized * 50, ForceMode.Impulse);
-        }
-    }
 
     public void Dano(float Dano)
     {
@@ -151,19 +134,14 @@ public class FirstPerson : MonoBehaviour
         // Si las vidas llegan a 0 o menos, destruye al personaje y carga la escena de Game Over
         if (vidasPersonaje <= 0)
         {
-          Destroy(gameObject);
+            hud.gameObject.SetActive(false);
+            muerte.gameObject.SetActive(true);
+            Destroy(gameObject);
           
         }
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        // Si el personaje entra en un trigger con la etiqueta "Caja"
-        if (other.gameObject.tag == "Caja")
-        {
-            
-        }
-    }
+   
 
     
 }

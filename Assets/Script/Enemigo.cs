@@ -37,7 +37,7 @@ public class Enemigo : MonoBehaviour
 
     void Update()
     {
-        // Establece como destino al jugador.
+        // Establece como destino en el jugador.
         agent.SetDestination(player.transform.position);
 
         // Si el enemigo ha llegado al jugador, detiene el movimiento y ataca.
